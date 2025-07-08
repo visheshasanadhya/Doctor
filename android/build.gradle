@@ -1,0 +1,28 @@
+buildscript {
+    ext.kotlin_version = '1.8.20' // updated Kotlin version
+    repositories {
+        google()
+        mavenCentral() // replaced jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0' // your current gradle plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral() // replaced jcenter()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
